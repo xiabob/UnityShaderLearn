@@ -54,11 +54,12 @@
             
             float4 frag(v2f i): SV_TARGET
             {
-                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb;
+                fixed3 albedo = tex2D(_MainTexture, i.uv).rgb * _Color.rgb; 
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb * albedo;
                 
                 fixed3 worldNormal = normalize(i.worldNormal);
                 fixed3 worldLight = normalize(UnityWorldSpaceLightDir(i.worldPosition));
-                fixed3 diffuse = tex2D(_MainTexture, i.uv) * _LightColor0.rgb * max(0, dot(worldNormal, worldLight));
+                fixed3 diffuse = albedo * _LightColor0.rgb * max(0, dot(worldNormal, worldLight));
                 
                 fixed3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPosition));
                 fixed3 halfDir = normalize(viewDir + worldLight);
