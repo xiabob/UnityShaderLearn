@@ -30,7 +30,6 @@
             {
                 float4 vertex: POSITION;
                 float3 normal: NORMAL;
-                float4 texcoord: TEXCOORD0;
             };
             
             struct v2f
@@ -38,7 +37,6 @@
                 float4 pos: SV_POSITION;
                 float3 worldPosition: TEXCOORD0;
                 float3 worldNormal: NORMAL;
-                float2 uv: TEXCOORD1;
             };
             
             v2f vert(a2v v)
@@ -47,7 +45,6 @@
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.uv = TRANSFORM_TEX(v.texcoord, _RampTex);
                 return o;
             }
             
