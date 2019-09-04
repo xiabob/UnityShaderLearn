@@ -14,7 +14,6 @@
         
         Pass
         {
-            Tags {"LightMode" = "ForwardBase"}
             ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha
             
@@ -55,8 +54,8 @@
                 float time = floor(_Time.y * _Speed);
                 float row = floor(time / _SpriteColumnCount);
                 float column = max(0, time - row * _SpriteColumnCount - 1);
-                half uvX = i.uv.x / _SpriteColumnCount  + column / _SpriteColumnCount;
-                half uvY = i.uv.y / _SpriteRowCount  - row / _SpriteRowCount;
+                half uvX = i.uv.x / _SpriteColumnCount + column / _SpriteColumnCount;
+                half uvY = i.uv.y / _SpriteRowCount + (_SpriteRowCount - row) / _SpriteRowCount;
                 fixed4 color = tex2D(_MainTex, half2(uvX, uvY));
                 return color;
             }
