@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapter12_SimplePostEffect : PostEffectBase
+public class Chapter12_EdgeDetection : PostEffectBase
 {
 
     [SerializeField] private Shader m_Shader;
-    [Range(0, 2)]
-    [SerializeField] private float m_Brightness = 1;
-    [Range(-1, 1)]
-    [SerializeField] private float m_Saturation = 0;
-    [Range(0, 1)]
-    [SerializeField] private float m_Contrast = 1;
+    [SerializeField] private Color m_EdgeColor = Color.black;
+    [SerializeField] private Color m_Background = Color.white;
+    [SerializeField] private bool m_EdgeOnly = false;
 
     private Material m_ShaderMaterial;
     public Material ShaderMaterial
@@ -23,19 +20,13 @@ public class Chapter12_SimplePostEffect : PostEffectBase
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         if (ShaderMaterial != null)
         {
-            ShaderMaterial.SetFloat("_Brightness", m_Brightness);
-            ShaderMaterial.SetFloat("_Saturation", m_Saturation);
-            ShaderMaterial.SetFloat("_Contrast", m_Contrast);
+            ShaderMaterial.SetColor("_EdgeColor", m_EdgeColor);
+            ShaderMaterial.SetColor("_BackgroundColor", m_Background);
+            ShaderMaterial.SetFloat("_EdgeOnly", m_EdgeOnly ? 1 : 0);
             Graphics.Blit(src, dest, ShaderMaterial);
         }
         else

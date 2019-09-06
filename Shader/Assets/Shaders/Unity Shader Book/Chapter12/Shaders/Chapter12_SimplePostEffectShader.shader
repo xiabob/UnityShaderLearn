@@ -5,7 +5,7 @@
         _MainTex ("Base (RGB)", 2D) = "white" { }
         _Brightness ("Brightness", Float) = 1
         _Saturation ("Saturation", Range(-1, 1)) = 0
-        _Contrast ("Contrast", Float) = 1
+        _Contrast ("Contrast", Range(0, 1)) = 1
     }
     
     SubShader
@@ -88,6 +88,9 @@
                     }
                 }
                 
+                // apply contrast
+                fixed3 average = fixed3(0.5, 0.5, 0.5);
+                finalColor = lerp(average, finalColor, _Contrast);
                 
                 return fixed4(finalColor, col.a);
             }
@@ -95,6 +98,6 @@
             
         }
     }
-
+    
     Fallback Off
 }
